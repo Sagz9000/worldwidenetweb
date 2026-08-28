@@ -1,0 +1,82 @@
+@model List<AssetPortal.Web.Models.WebhookSubscription>
+@{
+    ViewData["Title"] = "Webhooks";
+}
+
+<h1>Webhook subscriptions</h1>
+
+@if (!string.IsNullOrEmpty(ViewBag.Result as string))
+{
+    <div class="alert">@ViewBag.Result</div>
+}
+@if (!string.IsNullOrEmpty(ViewBag.FetchResult as string))
+{
+    <div class="alert">Fetched: @ViewBag.FetchResult</div>
+}
+
+<section class="card">
+    <h2>Add subscription</h2>
+    <form method="post" action="/webhooks/Create">
+        <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" />
+        </div>
+        <div class="field">
+            <label for="endpointUrl">Endpoint URL</label>
+            <input type="text" id="endpointUrl" name="endpointUrl" placeholder="http://host:port/path" />
+        </div>
+        <div class="field">
+            <label for="eventType">Event type</label>
+            <select id="eventType" name="eventType">
+                <option value="asset.created">asset.created</option>
+                <option value="ticket.updated">ticket.updated</option>
+                <option value="user.registered">user.registered</option>
+            </select>
+        </div>
+        <button type="submit">Add</button>
+    </form>
+</section>
+
+<section class="card">
+    <h2>Fetch external resource</h2>
+    <form method="post" action="/webhooks/Fetch">
+        <div class="field">
+            <label for="url">URL</label>
+            <input type="text" id="url" name="url" placeholder="http://example.com/file" />
+        </div>
+        <button type="submit">Fetch</button>
+    </form>
+</section>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Endpoint</th>
+            <th>Event</th>
+            <th>Enabled</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var w in Model)
+        {
+            <tr>
+                <td>@w.Name</td>
+                <td>@w.EndpointUrl</td>
+                <td>@w.EventType</td>
+                <td>
+                    <form method="post" action="/webhooks/Toggle/@w.Id">
+                        <input type="hidden" name="enabled" value="@(!w.IsEnabled)" />
+                        <button type="submit">@(w.IsEnabled ? "Disable" : "Enable")</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" action="/webhooks/Test/@w.Id">
+                        <button type="submit">Send test</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

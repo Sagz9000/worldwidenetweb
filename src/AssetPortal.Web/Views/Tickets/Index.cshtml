@@ -1,0 +1,32 @@
+@model List<AssetPortal.Web.Models.Ticket>
+@{
+    ViewData["Title"] = "Tickets";
+}
+
+<h1>Open tickets</h1>
+
+<p><a href="/tickets/Create" class="button">New ticket</a></p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Assignee</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model)
+        {
+            <tr>
+                <td><a href="/tickets/Detail/@t.Id">#@t.Id</a></td>
+                <td>@t.Title</td>
+                <td>@t.Priority</td>
+                <td>@t.Status</td>
+                <td>@(t.Assignee?.FullName ?? "Unassigned")</td>
+            </tr>
+        }
+    </tbody>
+</table>

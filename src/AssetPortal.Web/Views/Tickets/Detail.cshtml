@@ -1,0 +1,56 @@
+@model AssetPortal.Web.Models.Ticket
+@{
+    ViewData["Title"] = "Ticket #" + Model.Id;
+}
+
+<h1>#@Model.Id — @Model.Title</h1>
+
+<dl class="detail">
+    <dt>Description</dt>
+    <dd>@Model.Description</dd>
+    <dt>Priority</dt>
+    <dd>@Model.Priority</dd>
+    <dt>Status</dt>
+    <dd>@Model.Status</dd>
+    <dt>Reporter</dt>
+    <dd>@(Model.Reporter?.FullName ?? "Unknown")</dd>
+    <dt>Assignee</dt>
+    <dd>@(Model.Assignee?.FullName ?? "Unassigned")</dd>
+</dl>
+
+<section class="comments">
+    <h2>Comments</h2>
+    @if (Model.Comments.Any())
+    {
+        foreach (var c in Model.Comments)
+        {
+            <div class="comment">
+                <p class="comment-body">@Html.Raw(c.Body)</p>
+                <span class="comment-meta">@(c.Author?.FullName ?? "Unknown") · @c.CreatedAt.ToString("g")</span>
+            </div>
+        }
+    }
+    else
+    {
+        <p>No comments yet.</p>
+    }
+</section>
+
+<form method="post" action="/tickets/Detail/@Model.Id">
+    <div class="field">
+        <label for="comment">Add a comment</label>
+        <textarea id="comment" name="comment" rows="3"></textarea>
+    </div>
+    <button type="submit">Post comment</button>
+</form>
+
+<div class="actions">
+    <form method="post" action="/tickets/Resolve/@Model.Id">
+        <button type="submit" class="button">Mark resolved</button>
+    </form>
+    <form method="post" action="/tickets/Close/@Model.Id">
+        <button type="submit" class="button button-danger">Close ticket</button>
+    </form>
+</div>
+
+<p><a href="/tickets">Back to tickets</a></p>

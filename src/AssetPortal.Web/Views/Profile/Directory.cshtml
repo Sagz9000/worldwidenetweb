@@ -1,0 +1,28 @@
+@model List<AssetPortal.Web.Models.User>
+@{
+    ViewData["Title"] = "Directory";
+}
+
+<h1>Employee directory</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Department</th>
+            <th>Profile</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.FullName</td>
+                <td>@u.Username</td>
+                <td>@u.Department</td>
+                <td><a href="/profile/Index?userId=@u.Id">View</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  assetportal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: assetportal:latest
+    container_name: assetportal
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: "Data Source=/data/assetportal.db"
+    volumes:
+      - assetportal-data:/data
+    restart: unless-stopped
+
+volumes:
+  assetportal-data:
+    driver: local

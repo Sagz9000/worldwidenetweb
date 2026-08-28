@@ -1,0 +1,31 @@
+@model AssetPortal.Web.Models.Asset
+@{
+    ViewData["Title"] = "Asset #" + Model.Id;
+}
+
+<h1>Asset @Model.SerialNumber</h1>
+
+<dl class="detail">
+    <dt>Model</dt>
+    <dd>@Model.Model</dd>
+    <dt>Type</dt>
+    <dd>@Model.AssetType</dd>
+    <dt>Location</dt>
+    <dd>@Model.Location</dd>
+    <dt>Status</dt>
+    <dd>@Model.Status</dd>
+    <dt>Owner</dt>
+    <dd>@(Model.Owner?.FullName ?? "Unassigned")</dd>
+    <dt>Last audited</dt>
+    <dd>@Model.LastAudited.ToString("yyyy-MM-dd")</dd>
+</dl>
+
+@if (!string.IsNullOrEmpty(Model.Notes))
+{
+    <section class="notes">
+        <h2>Notes</h2>
+        <p>@Html.Raw(Model.Notes)</p>
+    </section>
+}
+
+<p><a href="/assets">Back to inventory</a></p>

@@ -1,0 +1,54 @@
+@model AssetPortal.Web.Controllers.AssetListViewModel
+@{
+    ViewData["Title"] = "Assets";
+}
+
+<h1>Asset inventory</h1>
+
+<form method="get" action="/assets">
+    <div class="field-row">
+        <input type="text" name="search" value="@Model.SearchTerm" placeholder="Search model / serial / location" />
+        <select name="sort">
+            <option value="Id">ID</option>
+            <option value="SerialNumber">Serial</option>
+            <option value="Model">Model</option>
+            <option value="Location">Location</option>
+            <option value="LastAudited">Last audited</option>
+        </select>
+        <select name="dir">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+        <button type="submit">Search</button>
+        <a href="/assets/Upload" class="button button-alt">Upload file</a>
+    </div>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.SearchTerm))
+{
+    <p class="search-echo">Search query reflected: @Html.Raw(Model.SearchTerm)</p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Serial</th>
+            <th>Model</th>
+            <th>Location</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model.Items)
+        {
+            <tr>
+                <td><a href="/assets/Detail/@a.Id">@a.Id</a></td>
+                <td>@a.SerialNumber</td>
+                <td>@a.Model</td>
+                <td>@a.Location</td>
+                <td>@a.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>

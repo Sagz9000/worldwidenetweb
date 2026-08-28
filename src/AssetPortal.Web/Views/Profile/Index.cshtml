@@ -1,0 +1,27 @@
+@model AssetPortal.Web.Models.User
+@{
+    ViewData["Title"] = Model?.FullName ?? "Profile";
+}
+
+@if (Model is null)
+{
+    <p>Unable to find that profile.</p>
+    <p><a href="/profile">Back to your profile</a></p>
+}
+else
+{
+    <h1>@Model.FullName (@Model.Username)</h1>
+
+    <dl class="detail">
+        <dt>Email</dt>
+        <dd>@Model.Email</dd>
+        <dt>Department</dt>
+        <dd>@Model.Department</dd>
+        <dt>Role</dt>
+        <dd>@Model.Role</dd>
+        <dt>Member since</dt>
+        <dd>@Model.CreatedAt.ToString("yyyy-MM-dd")</dd>
+    </dl>
+}
+
+<p><a href="/profile/Directory">View directory</a></p>

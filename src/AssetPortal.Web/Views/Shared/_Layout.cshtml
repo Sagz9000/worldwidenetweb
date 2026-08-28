@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AssetPortal</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="topbar">
+            <span class="brand">AssetPortal</span>
+            <div class="navlinks">
+                <a href="/">Dashboard</a>
+                <a href="/assets">Assets</a>
+                <a href="/tickets">Tickets</a>
+                <a href="/webhooks">Webhooks</a>
+                <a href="/import">Import</a>
+                <a href="/profile">Profile</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        @RenderBody()
+    </main>
+
+    <footer class="foot">
+        <span>Internal tool · build 4.2.1</span>
+    </footer>
+</body>
+</html>

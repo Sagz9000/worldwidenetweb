@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Data import";
+}
+
+<h1>Data import / restore</h1>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message as string))
+{
+    <div class="notice">@ViewBag.Message</div>
+}
+
+<section class="card">
+    <h2>Restore asset snapshot</h2>
+    <p>Upload a previously exported snapshot JSON to restore asset records.</p>
+    <form method="post" action="/import/Restore" enctype="multipart/form-data">
+        <div class="field">
+            <label for="file">Snapshot file</label>
+            <input type="file" id="file" name="file" />
+        </div>
+        <button type="submit">Restore</button>
+    </form>
+</section>
+
+<section class="card">
+    <h2>Compare snapshots</h2>
+    <form method="post" action="/import/Diff">
+        <div class="field">
+            <label for="snapshotJson">Current snapshot</label>
+            <textarea id="snapshotJson" name="snapshotJson" rows="4"></textarea>
+        </div>
+        <div class="field">
+            <label for="incomingJson">Incoming snapshot</label>
+            <textarea id="incomingJson" name="incomingJson" rows="4"></textarea>
+        </div>
+        <button type="submit">Diff</button>
+    </form>
+</section>

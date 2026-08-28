@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "Upload asset document";
+}
+
+<h1>Upload asset document</h1>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message as string))
+{
+    <div class="notice">@Html.Raw(ViewBag.Message)</div>
+}
+
+<form method="post" action="/assets/Upload" enctype="multipart/form-data">
+    <div class="field">
+        <label for="file">Document</label>
+        <input type="file" id="file" name="file" />
+    </div>
+    <button type="submit">Upload</button>
+</form>
+
+<p><a href="/assets">Back to inventory</a></p>

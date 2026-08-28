@@ -1,0 +1,35 @@
+@model AssetPortal.Web.Controllers.HomeViewModel
+@{ ViewData["Title"] = "Dashboard"; }
+
+<h1>Welcome back, @Model.Greeting</h1>
+
+<p>Your portal at a glance. Recent assets and open tickets below.</p>
+
+@if (!string.IsNullOrEmpty(Model.SearchTerm))
+{
+    <div class="search-echo">
+        Showing results for: @Html.Raw(Model.SearchTerm)
+    </div>
+}
+
+<section class="cards">
+    <div class="card">
+        <h2>Recent assets</h2>
+        <ul>
+            @foreach (var a in Model.RecentAssets)
+            {
+                <li><a href="/assets/Detail/@a.Id">@a.Model</a> — @a.SerialNumber</li>
+            }
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Open tickets</h2>
+        <ul>
+            @foreach (var t in Model.OpenTickets)
+            {
+                <li><a href="/tickets/Detail/@t.Id">#@t.Id @t.Title</a></li>
+            }
+        </ul>
+    </div>
+</section>
